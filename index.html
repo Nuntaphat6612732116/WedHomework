@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News Website</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+        }
+
+        #news-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-item {
+            flex: 0 1 45%; /* Adjust the width as needed */
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>News to day</h1>
+    </header>
+
+    <div id="news-container"></div>
+
+    <script>
+        // Replace 'YOUR_API_KEY' with your actual News API key
+        const apiKey = '94ae897c285e472ca3a3ca34b35bd819';
+        const apiUrl = 'https://newsapi.org/v2/top-headlines?country=th&apiKey=' + apiKey;
+
+        // Function to remove news item
+        const removeNewsItem = (index) => {
+            const newsContainer = document.getElementById('news-container');
+            const newsItems = document.getElementsByClassName('news-item');
+
+            // Remove the selected news item from the DOM
+            if (newsItems[index]) {
+                newsContainer.removeChild(newsItems[index]);
+            }
+        };
+
+        // Fetch news data from the API
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                const newsContainer = document.getElementById('news-container');
+
+                // Loop through articles and display them
+                data.articles.forEach((article, index) => {
+                    const newsItem = document.createElement('div');
+                    newsItem.classList.add('news-item');
+                    newsItem.innerHTML = `
+                        <h2>${article.title}</h2>
+                  
+                        <a href="${article.url}" target="_blank">Read more</a>
+                        <br>
+                        <button onclick="removeNewsItem(${index})">Remove</button>
+                        <hr>
+                    `;
+                    newsContainer.appendChild(newsItem);
+                });
+            })
+            .catch(error => console.error('Error fetching news:', error));
+    </script>
+
+</body>
+</html>
