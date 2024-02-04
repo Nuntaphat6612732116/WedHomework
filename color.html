@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6612732116</title>
+</head>
+<style>
+    .centered {
+        position: fixed; 
+        top: 50%;
+        left: 50%;
+      }
+</style>
+<body>
+    <div class="centered">
+        <label >color picker:</label>
+        <input type="color" onchange="backg(this.value)" value="#ff0000">
+    </div>  
+</body>
+<script>
+    function backg(val){
+        document.body.style.background=val;
+    }
+</script>
+</html>
